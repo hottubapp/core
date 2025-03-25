@@ -1,8 +1,9 @@
 {
-  "name": "@hottubapp/api-core",
-  "version": "1.0.2",
+  "name": "@hottubapp/core",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "private": false,
   "scripts": {
     "build": "tsc && npx tsc-alias",
     "dev": "tsc --watch",
