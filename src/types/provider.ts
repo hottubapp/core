@@ -1,28 +1,6 @@
 import { Video } from "../models/Video";
-import { SearchOptions } from "../models/SearchOptions";
+import { VideosRequest, VideosResponse } from "./video";
 import { Channel } from "./channel";
-
-/**
- * Represents the result of a video search.
- */
-export interface VideoResult {
-  /**
-   * An array of videos returned from the search.
-   * @type {Video[]}
-   */
-  videos: Video[];
-
-  /**
-   * Pagination information and additional metadata
-   * @property {boolean} hasNextPage - Indicates if there are more results available
-   * @property {Record<string, string>} [parameters] - Optional parameters for pagination/filtering
-   */
-  pageInfo?: {
-    hasNextPage: boolean;
-    parameters?: Record<string, string>;
-    [key: string]: any; // Allow any additional properties
-  };
-}
 
 /**
  * Base interface for any type of content provider.
@@ -36,10 +14,10 @@ export interface ContentProvider {
 
   /**
    * Single method to get videos with flexible options.
-   * @param {SearchOptions} options - Options for retrieving videos.
-   * @returns {Promise<VideoResult>} A promise that resolves to the video result.
+   * @param {VideosRequest} options - Options for retrieving videos.
+   * @returns {Promise<VideosResponse>} A promise that resolves to the video result.
    */
-  getVideos(options: SearchOptions): Promise<VideoResult>;
+  getVideos(options: VideosRequest): Promise<VideosResponse>;
 
   /**
    * Optional method to get details of a specific video.
@@ -51,8 +29,8 @@ export interface ContentProvider {
   /**
    * Optional method to get related videos.
    * @param {string} videoId - The ID of the video to find related videos for.
-   * @param {PaginationOptions} options - Options for pagination.
-   * @returns {Promise<VideoResult>} A promise that resolves to the related video results.
+   * @param {VideosRequest} options - Options for retrieving related videos.
+   * @returns {Promise<VideosResponse>} A promise that resolves to the related video results.
    */
-  getRelatedVideos?(videoId: string, options: SearchOptions): Promise<VideoResult>;
+  getRelatedVideos?(videoId: string, options: VideosRequest): Promise<VideosResponse>;
 }

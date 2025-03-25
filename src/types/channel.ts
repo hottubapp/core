@@ -1,7 +1,8 @@
 export interface ChannelOptionChoice {
   id: string;
   title: string;
-  options?: ChannelOption[];
+  description?: string;
+  options?: ChannelOption[]; // Nested Options to show when this option is selected
 }
 
 export interface ChannelOption {
@@ -10,7 +11,7 @@ export interface ChannelOption {
   systemImage?: string;
   colorName?: string;
   multiSelect?: boolean;
-  options: ChannelOption[];
+  options: ChannelOptionChoice[];
   value?: string | number | boolean;
 }
 

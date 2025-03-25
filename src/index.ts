@@ -1,4 +1,4 @@
-import { SearchOptions } from "./models/SearchOptions";
+import { VideosRequest } from "./types/video";
 import { ContentProvider } from "./types/provider";
 export * from "./types";
 export * from "./utils";
@@ -39,11 +39,11 @@ class VideoProviderRegistry {
   /**
    * Retrieves videos from the specified channel.
    * @param {string} channel - The name of the channel to fetch videos from.
-   * @param {SearchOptions} options - Options for searching videos.
-   * @returns {Promise<Video[]>} A promise that resolves to an array of videos.
+   * @param {VideosRequest} options - Options for searching videos.
+   * @returns {Promise<VideosResponse>} A promise that resolves to an array of videos.
    * @throws {Error} If the provider for the specified channel is not found.
    */
-  async getVideos(channel: string, options: SearchOptions) {
+  async getVideos(channel: string, options: VideosRequest) {
     const ProviderClass = this.providers[channel];
     if (!ProviderClass) {
       console.error(`Provider for channel "${channel}" not found.`);
@@ -54,7 +54,7 @@ class VideoProviderRegistry {
           parameters: {},
           error: `Provider for channel "${channel}" not found.`,
         },
-        videos: [],
+        items: [],
       };
     }
 
