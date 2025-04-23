@@ -36,4 +36,5 @@ export interface Channel {
   options: ChannelOption[];
   nsfw?: boolean;
   ytdlpCommand?: string;
+  cacheDuration?: number;
 }

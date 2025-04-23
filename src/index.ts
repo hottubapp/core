@@ -22,7 +22,8 @@ class VideoProviderRegistry {
     private readonly additionalProviders: Record<string, new () => ContentProvider> = {},
     private readonly options: {
       proxy?: string;
-    } = {},
+      timeout?: number;
+    } = {}
   ) {
     this.providers = { ...additionalProviders };
     this.options = options;

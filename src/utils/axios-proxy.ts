@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from "axios";
-
 import { HttpsProxyAgent } from "https-proxy-agent";
 
 export function parseProxy(proxy: string | undefined): {
@@ -11,7 +10,7 @@ export function parseProxy(proxy: string | undefined): {
 } {
   const [host, port, username, password] = proxy?.split(":") ?? [];
   if (!host || !port || !username || !password) {
-    console.warn("No proxy URL provided, creating standard Axios instance");
+    // console.warn("No proxy URL provided, creating standard Axios instance");
     return { host: null, port: null, username: null, password: null, url: null };
   }
 
@@ -55,7 +54,7 @@ export async function testProxyConnection(axiosInstance: AxiosInstance): Promise
 }
 
 // Helper function to create an Axios instance with optional proxy support
-export function createAxiosInstanceWithProxy(proxy: string | undefined): AxiosInstance {
+export function createAxiosInstanceWithProxy(proxy: string | undefined, options?: { timeout?: number }): AxiosInstance {
   const proxyUrl = getProxyUrl(proxy);
   if (!proxyUrl) return axios.create();
 
@@ -64,5 +63,11 @@ export function createAxiosInstanceWithProxy(proxy: string | undefined): AxiosIn
   return axios.create({
     httpsAgent,
     proxy: false, // Important: disable axios's built-in proxy handling when using an agent
+    ...(options?.timeout
+      ? {
+          timeout: options.timeout,
+          signal: AbortSignal.timeout(options.timeout),
+        }
+      : {}),
   });
 }
